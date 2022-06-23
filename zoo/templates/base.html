@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">Zoo</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item {% if active_page == '/' %} active {% endif %}">
+                <a class="nav-link" href="/">Главная (животные) <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item {% if active_page == '/about/' %} active {% endif %}">
+                <a class="nav-link" href="/about/">О зоопарке</a>
+            </li>
+            <li class="nav-item {% if active_page == '/contact/' %} active {% endif %}">
+                <a class="nav-link" href="/contact/">Контакты</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'animals:register' %}">Регистрация</a>
+            </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'animals:logout' %}">Выход</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'animals:login' %}">Вход</a>
+                </li>
+            {% endif %}
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
+        </form>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    {% block main %} {% endblock %}
+</div>
+
+</body>
+</html>

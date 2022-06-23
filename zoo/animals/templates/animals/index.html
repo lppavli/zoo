@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}
+Главная
+{% endblock %}
+{% block main %}
+    <h1>Зоопарк</h1>
+    <ul class="list-group">
+        {% for animal in object_list %}
+        <li class="list-group-item">
+            {% if animal.kind.image %}
+                <img class="img rounded-circle" width="150px" src="{{animal.kind.image.url}}">
+            {% endif %}
+            <a href="{% url 'animals:detail' pk=animal.pk %}"> ({{animal.kind}}</a> {{animal.kind.family}})
+        <a href="{% url 'animals:update' pk=animal.pk %}" class="btn btn-primary">Обновить</a>
+        <a href="{% url 'animals:delete' pk=animal.pk %}" class="btn btn-danger">Удалить</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'animals:create' %}" class="btn btn-primary">Добавить</a>
+
+{% endblock %}
